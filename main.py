@@ -13,7 +13,7 @@ import procgen
 def main() -> None:
     screen_width = 80
     screen_height = 50
-    map_width, map_height = 80, 45
+    map_width, map_height = 100, 100
 
     tcod.console_set_custom_font("data/cp437-14.png", tcod.FONT_LAYOUT_CP437, 32, 8)
 

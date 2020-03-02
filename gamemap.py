@@ -24,6 +24,7 @@ tile_dt = np.dtype(
         ("transparent", np.bool),
         ("light", tile_graphic),
         ("dark", tile_graphic),
+        ("memory", tile_graphic),
     ]
 )
 
@@ -35,6 +36,7 @@ class Tile(NamedTuple):
     transparent: bool
     light: Tuple[int, Tuple[int, int, int], Tuple[int, int, int]]
     dark: Tuple[int, Tuple[int, int, int], Tuple[int, int, int]]
+    memory: Tuple[int, Tuple[int, int, int], Tuple[int, int, int]]
 
 
 class MapLocation(Location):
@@ -89,9 +91,9 @@ class GameMap:
         self.visible = tcod.map.compute_fov(
             transparency=self.tiles["transparent"],
             pov=self.player.location.xy,
-            radius=10,
+            radius=0,
             light_walls=True,
-            algorithm=tcod.FOV_RESTRICTIVE,
+            algorithm=tcod.FOV_PERMISSIVE(8),
         )
         self.explored |= self.visible
 
@@ -115,7 +117,7 @@ class GameMap:
         # Draw the console based on visible or explored areas.
         console.tiles_rgb[screen_view] = np.select(
             (self.visible[world_view], self.explored[world_view]),
-            (self.tiles["light"][world_view], self.tiles["dark"][world_view]),
+            (self.tiles["dark"][world_view], self.tiles["memory"][world_view]),
             self.DARKNESS,
         )
 

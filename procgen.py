@@ -14,14 +14,16 @@ import item
 WALL = gamemap.Tile(
     move_cost=0,
     transparent=False,
-    light=(ord(" "), (255, 255, 255), (130, 110, 50)),
-    dark=(ord(" "), (255, 255, 255), (0, 0, 100)),
+    light=(ord("="), (111, 111, 111), (130, 110, 50)),
+    dark=(ord("="), (33, 33, 111), (22, 22, 100)),
+    memory=(ord("="), (11, 11, 111), (0, 0, 50)),
 )
 FLOOR = gamemap.Tile(
     move_cost=1,
     transparent=True,
     light=(ord(" "), (255, 255, 255), (200, 180, 50)),
     dark=(ord(" "), (255, 255, 255), (50, 50, 150)),
+    memory=(ord(" "), (255, 255, 255), (20, 20, 50)),
 )
 
 
@@ -89,7 +91,6 @@ class Room:
                 monsterCls = fighter.Orc
             else:
                 monsterCls = fighter.Troll
-            monsterCls.spawn(gamemap[xy])
 
         for xy in self.get_free_spaces(gamemap, items):
             item.HealingPotion().place(gamemap[xy])
@@ -100,9 +101,10 @@ def generate(width: int, height: int) -> gamemap.GameMap:
     room_max_size = 10
     room_min_size = 6
     max_rooms = 30
+    AREA_BORDER = 20
 
     gm = gamemap.GameMap(width, height)
-    gm.tiles[...] = WALL
+    gm.tiles[...] = FLOOR
     rooms: List[Room] = []
 
     for i in range(max_rooms):
@@ -110,13 +112,14 @@ def generate(width: int, height: int) -> gamemap.GameMap:
         w = random.randint(room_min_size, room_max_size)
         h = random.randint(room_min_size, room_max_size)
         # random position without going out of the boundaries of the map
-        x = random.randint(0, width - w)
-        y = random.randint(0, height - h)
+        x = random.randint(AREA_BORDER, width - AREA_BORDER - w)
+        y = random.randint(AREA_BORDER, height - AREA_BORDER - h)
         new_room = Room(x, y, w, h)
         if any(new_room.intersects(other) for other in rooms):
             continue  # This room intersects with a previous room.
 
         # Mark room inner area as open.
+        gm.tiles[new_room.outer] = WALL
         gm.tiles[new_room.inner] = FLOOR
         if rooms:
             # Open a tunnel between rooms.
