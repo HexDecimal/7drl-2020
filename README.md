@@ -1,9 +1,5 @@
-# HexDecimal/roguelike-tutorial
+# 7DRL 2020
 
-An attempt at doing the tutorial without any deprecated features of python-tcod.
+Project for 7DRL 2020: https://itch.io/jam/7drl-challenge-2020
 
-https://old.reddit.com/r/roguelikedev/wiki/python_tutorial_series
-
-![Roguelike Tutorial 2019][logo]
-
-[logo]: https://i.imgur.com/3MAzEp1.png "Roguelikedev Does The Complete Roguelike Tutorial 2019"
+Using this code as a base: https://github.com/HexDecimal/roguelike-tutorial
