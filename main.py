@@ -34,4 +34,17 @@ def main() -> None:
 if __name__ == "__main__":
     if not sys.warnoptions:
         warnings.simplefilter("default")  # Show all warnings once by default.
-    main()
+    if "--profile" in sys.argv:
+        import cProfile
+        import pstats
+
+        profile = cProfile.Profile()
+        try:
+            profile.runcall(main)
+        finally:
+            stats = pstats.Stats(profile)
+            stats.strip_dirs()
+            stats.sort_stats("time")
+            stats.print_stats(40)
+    else:
+        main()
