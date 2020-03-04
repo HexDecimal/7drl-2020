@@ -49,6 +49,11 @@ class BasicMonster(AI):
         return actions.MoveTo(owner, self.path.pop(0)).poll()
 
 
+class GuardAI(AI):
+    def poll(self) -> Action:
+        return actions.Move(self.actor, (0, 0)).poll()
+
+
 class PlayerControl(AI):
     def act(self) -> None:
         ticket = self.actor.ticket

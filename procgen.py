@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import random
-from typing import Iterator, List, Tuple, Type
+from typing import Iterator, List, Tuple
 
 import numpy as np  # type: ignore
 import tcod
@@ -83,14 +83,10 @@ class Room:
 
     def place_entities(self, gamemap: gamemap.GameMap) -> None:
         """Spawn entities within this room."""
-        monsters = random.randint(0, 3)
+        monsters = random.randint(0, 1)
         items = random.randint(0, 2)
         for xy in self.get_free_spaces(gamemap, monsters):
-            monsterCls: Type[fighter.Fighter]
-            if random.randint(0, 100) < 80:
-                monsterCls = fighter.Orc
-            else:
-                monsterCls = fighter.Troll
+            fighter.Guard.spawn(gamemap[xy])
 
         for xy in self.get_free_spaces(gamemap, items):
             item.HealingPotion().place(gamemap[xy])
@@ -140,7 +136,7 @@ def generate(width: int, height: int) -> gamemap.GameMap:
         rooms.append(new_room)
 
     # Add player to the first room.
-    gm.player = fighter.Player.spawn(gm[rooms[0].center], ai_cls=ai.PlayerControl)
+    gm.player = fighter.Player.spawn(gm[5, height - 5], ai_cls=ai.PlayerControl)
     gm.actors.append(gm.player)
 
     for room in rooms:

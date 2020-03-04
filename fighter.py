@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Optional, Type, TYPE_CHECKING
 
 import actor
-from ai import AI, BasicMonster
+from ai import AI, BasicMonster, GuardAI
 import graphic
 from inventory import Inventory
 
@@ -61,3 +61,14 @@ class Troll(Fighter):
     hp = 16
     power = 4
     defense = 1
+
+
+class Guard(Fighter):
+    name = "Guard"
+    char = ord("U")
+    color = (255, 255, 255)
+    DEFAULT_AI: Type[AI] = GuardAI
+
+    hp = 10
+    power = 3
+    defense = 0
