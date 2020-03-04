@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Tuple, TYPE_CHECKING
+from typing import List, Optional, Tuple, TYPE_CHECKING
 
 import numpy as np  # type: ignore
 import tcod.path
@@ -68,7 +68,19 @@ class BasicMonster(AI):
 
 
 class GuardAI(AI):
+    def __init__(self, actor: Actor) -> None:
+        super().__init__(actor)
+        self.pathfinder: Optional[Action] = None
+
     def poll(self) -> Action:
+        player = self.actor.location.map.player
+        if self.actor.fov[player.location.xy]:
+            self.pathfinder = Pathfinder(self.actor, player.location.xy)
+        if self.pathfinder:
+            try:
+                return self.pathfinder.poll()
+            except NoAction:
+                self.pathfinder = None
         return actions.Move(self.actor, (0, 0)).poll()
 
 
