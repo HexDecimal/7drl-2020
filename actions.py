@@ -25,6 +25,12 @@ class MoveTo(ActionWithPosition):
         return self
 
     def act(self) -> None:
+        if self.actor.location.xy != self.target_pos:
+            self.actor._fov = None
+            rel_x = self.target_pos[0] - self.actor.location.x
+            rel_y = self.target_pos[1] - self.actor.location.y
+            self.actor.look_dir = (rel_x, rel_y)
+
         self.actor.location = self.map[self.target_pos]
         if self.is_player():
             self.map.update_fov()

@@ -114,10 +114,21 @@ class GameMap:
         screen_view = np.s_[:view_width, :view_height]
         world_view = np.s_[cam_x : cam_x + view_width, cam_y : cam_y + view_height]
 
+        enemy_fov = np.zeros((view_width, view_height), dtype=bool)
+        for actor in self.actors:
+            if actor is self.player:
+                continue
+            enemy_fov |= actor.fov[world_view]
+        enemy_fov &= self.visible[world_view]
+
         # Draw the console based on visible or explored areas.
         console.tiles_rgb[screen_view] = np.select(
-            (self.visible[world_view], self.explored[world_view]),
-            (self.tiles["dark"][world_view], self.tiles["memory"][world_view]),
+            (enemy_fov, self.visible[world_view], self.explored[world_view]),
+            (
+                self.tiles["light"][world_view],
+                self.tiles["dark"][world_view],
+                self.tiles["memory"][world_view],
+            ),
             self.DARKNESS,
         )
 
