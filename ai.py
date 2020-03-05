@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from typing import List, Optional, Tuple, TYPE_CHECKING
 
 import numpy as np  # type: ignore
@@ -23,7 +24,9 @@ class Pathfinder(Action):
         blocker_index = tuple(np.transpose(blocker_pos))
         walkable[blocker_index] = False
         walkable[dest_xy] = True
-        self.path: List[Tuple[int, int]] = tcod.path.AStar(walkable).get_path(*self.actor.location.xy, *dest_xy)
+        self.path: List[Tuple[int, int]] = tcod.path.AStar(walkable).get_path(
+            *self.actor.location.xy, *dest_xy
+        )
 
     def poll(self) -> Action:
         if not self.path:
@@ -67,6 +70,37 @@ class BasicMonster(AI):
         return actions.MoveTo(owner, self.path.pop(0)).poll()
 
 
+class TurnRandomly(Action):
+    DIRS = (
+        (-1, -1),
+        (-1, 0),
+        (-1, 1),
+        (0, 1),
+        (1, 1),
+        (1, 0),
+        (1, -1),
+        (0, -1),
+    )
+
+    def act(self) -> None:
+        my_dir = self.DIRS.index(self.actor.look_dir)
+        my_dir += 1 if random.random() < 0.5 else -1
+        my_dir %= len(self.DIRS)
+        self.actor.look_dir = self.DIRS[my_dir]
+        self.actor._fov = None
+        self.reschedule(100)
+
+
+class Wander(Action):
+    def poll(self) -> Action:
+        try:
+            if random.random() > 0.25:
+                return actions.Move(self.actor, self.actor.look_dir).poll()
+        except NoAction:
+            pass
+        return TurnRandomly(self.actor).poll()
+
+
 class GuardAI(AI):
     def __init__(self, actor: Actor) -> None:
         super().__init__(actor)
@@ -81,7 +115,7 @@ class GuardAI(AI):
                 return self.pathfinder.poll()
             except NoAction:
                 self.pathfinder = None
-        return actions.Move(self.actor, (0, 0)).poll()
+        return Wander(self.actor).poll()
 
 
 class PlayerControl(AI):
