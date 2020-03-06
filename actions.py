@@ -34,7 +34,7 @@ class MoveTo(ActionWithPosition):
         self.actor.location = self.map[self.target_pos]
         if self.is_player():
             self.map.update_fov()
-        self.reschedule(100)
+        self.reschedule(self.actor.fighter.speed)
 
 
 class Move(ActionWithDirection):

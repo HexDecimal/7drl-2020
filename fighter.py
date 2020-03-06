@@ -18,6 +18,7 @@ class Fighter(graphic.Graphic):
     hp: int = 0
     power: int = 0
     defense: int = 0
+    speed: int = 100
 
     DEFAULT_AI: Type[AI] = BasicMonster
 
@@ -72,3 +73,4 @@ class Guard(Fighter):
     hp = 10
     power = 3
     defense = 0
+    speed = 200
