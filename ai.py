@@ -101,10 +101,34 @@ class Wander(Action):
         return TurnRandomly(self.actor).poll()
 
 
+class RandomPatrol(Action):
+    def __init__(self, actor: Actor) -> None:
+        super().__init__(actor)
+        self.subaction: Optional[Pathfinder] = None
+
+    def poll(self) -> Action:
+        if self.subaction:
+            try:
+                return self.subaction.poll()
+            except NoAction:
+                pass
+        while True:
+            dest_xy = (
+                random.randint(0, self.actor.location.map.width - 1),
+                random.randint(0, self.actor.location.map.height - 1),
+            )
+            self.subaction = Pathfinder(self.actor, dest_xy)
+            try:
+                return self.subaction.poll()
+            except NoAction:
+                pass
+
+
 class GuardAI(AI):
     def __init__(self, actor: Actor) -> None:
         super().__init__(actor)
         self.pathfinder: Optional[Action] = None
+        self.random_patrol = RandomPatrol(self.actor)
 
     def poll(self) -> Action:
         player = self.actor.location.map.player
@@ -115,7 +139,7 @@ class GuardAI(AI):
                 return self.pathfinder.poll()
             except NoAction:
                 self.pathfinder = None
-        return Wander(self.actor).poll()
+        return self.random_patrol.poll()
 
 
 class PlayerControl(AI):
