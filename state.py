@@ -4,7 +4,7 @@ import tcod
 import tcod.console
 import tcod.event
 
-CONSOLE_MIN_SIZE = (60, 10)  # The smallest acceptable main console size.
+CONSOLE_MIN_SIZE = (60, 16)  # The smallest acceptable main console size.
 g_console: tcod.console.Console  # Global console object.
 
 

@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import List, TYPE_CHECKING
+import itertools
+from typing import Iterator, List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from item import Item
 
 
 class Inventory:
-    symbols = "abcdefghijklmnopqrstuvwxyz"
+    symbols = "abcde"
     capacity = len(symbols)
 
     def __init__(self) -> None:
@@ -19,3 +20,10 @@ class Inventory:
         item.lift()
         self.contents.append(item)
         item.owner = self
+
+    def list_item_descriptions(self) -> Iterator[str]:
+        for key, item in itertools.zip_longest(self.symbols, self.contents):
+            if item:
+                yield f"{key} {item.name}"
+            else:
+                yield f"{key} -----"

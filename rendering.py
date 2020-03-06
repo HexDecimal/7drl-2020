@@ -53,12 +53,21 @@ def draw_main_view(model: Model, console: Console) -> None:
         (0x80, 0, 0),
     )
 
+    y = 0
+    for desc in player.fighter.inventory.list_item_descriptions():
+        item_panel = tcod.console.Console(console_ui.width, 2)
+        item_panel.print(1, 0, desc)
+        item_panel.blit(console_ui, 0, y)
+        y += item_panel.height
+
+    log_top = y
+
     x = 1
     y = console_ui.height
     log_width = console_ui.width - 1
     for text in model.log[::-1]:
         y -= tcod.console.get_height_rect(log_width, str(text))
-        if y < 7:
+        if y < log_top:
             break
         console_ui.print_box(x, y, log_width, 0, str(text))
 
