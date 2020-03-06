@@ -89,7 +89,7 @@ class Room:
             fighter.Guard.spawn(gamemap[xy])
 
         for xy in self.get_free_spaces(gamemap, items):
-            item.HealingPotion().place(gamemap[xy])
+            item.Pistol().place(gamemap[xy])
 
 
 def generate(width: int, height: int) -> gamemap.GameMap:

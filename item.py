@@ -86,3 +86,39 @@ class Corpse(Item):
     def __init__(self, actor: Actor) -> None:
         super().__init__()
         self.name = f"{actor.fighter.name} Corpse"
+
+
+class Firearm(Item):
+    name = "<Firearm>"
+    char = ord("¬")
+    color = (0x7F, 0x7F, 0x7F)
+    AMMO = 6
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.ammo = self.AMMO
+
+
+class Pistol(Firearm):
+    name = "Pistol"
+
+    def activate(self, action: ActionWithItem) -> None:
+        if not self.ammo:
+            action.report(f"The {self.name} is out of ammo!")
+            return
+        self.ammo -= 1
+        enemies = []
+        for target in action.actor.location.map.actors:
+            if target is action.actor:
+                continue
+            if not action.actor.location.map.visible[target.location.xy]:
+                continue
+            enemies.append(
+                (action.actor.location.distance_to(*target.location.xy), target)
+            )
+        if enemies:
+            target = min(enemies)[1]
+            action.report(f"You shoot the {target.fighter.name}.")
+            action.kill_actor(target)
+        else:
+            action.report(f"You fire the {self.name}.")
