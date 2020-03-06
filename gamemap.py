@@ -101,9 +101,8 @@ class GameMap:
         """Render this maps contents onto a console."""
         # Get the view size from the window size or world size,
         # whichever is smaller.
-        UI_SIZE = 5
         view_width = min(self.width, console.width)
-        view_height = min(self.height, console.height - UI_SIZE)
+        view_height = min(self.height, console.height)
         # Get the upper left camera position, assuming camera_xy is the center.
         cam_x = self.camera_xy[0] - view_width // 2
         cam_y = self.camera_xy[1] - view_height // 2

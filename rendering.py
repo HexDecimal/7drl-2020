@@ -9,6 +9,9 @@ if TYPE_CHECKING:
     from model import Model
 
 
+UI_WIDTH = 30
+
+
 def render_bar(
     console: tcod.console.Console,
     x: int,
@@ -33,8 +36,11 @@ def draw_main_view(model: Model, console: Console) -> None:
     if player.location:
         model.active_map.camera_xy = player.location.xy
 
-    console.clear()
-    model.active_map.render(console)
+    console_world = tcod.console.Console(
+        console.width - UI_WIDTH, console.height, order="F"
+    )
+    console_ui = tcod.console.Console(UI_WIDTH, console.height, order="F")
+    model.active_map.render(console_world)
 
     render_bar(
         console,
@@ -47,12 +53,14 @@ def draw_main_view(model: Model, console: Console) -> None:
         (0x80, 0, 0),
     )
 
-    x = bar_width + 2
-    y = console.height
-    log_width = console.width - x
-    i = 0
+    x = 1
+    y = console_ui.height
+    log_width = console_ui.width - 1
     for text in model.log[::-1]:
-        i += tcod.console.get_height_rect(log_width, str(text))
-        if i >= 7:
+        y -= tcod.console.get_height_rect(log_width, str(text))
+        if y < 7:
             break
-        console.print_box(x, y - i, log_width, 0, str(text))
+        console_ui.print_box(x, y, log_width, 0, str(text))
+
+    console.tiles[:-UI_WIDTH, :] = console_world.tiles
+    console.tiles[-UI_WIDTH:, :] = console_ui.tiles
