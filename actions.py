@@ -97,6 +97,8 @@ class Pickup(Action):
     def poll(self) -> Action:
         if not self.map.items.get(self.location.xy):
             raise NoAction("There is nothing to pick up.")
+        if self.actor.fighter.inventory.is_full():
+            raise NoAction("Your inventory is full.")
         return self
 
     def act(self) -> None:

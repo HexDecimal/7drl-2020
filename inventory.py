@@ -27,3 +27,6 @@ class Inventory:
                 yield f"{key} {item.name}"
             else:
                 yield f"{key} -----"
+
+    def is_full(self) -> bool:
+        return len(self.contents) >= self.capacity
