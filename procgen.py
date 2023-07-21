@@ -3,8 +3,8 @@ from __future__ import annotations
 import random
 from typing import Iterator, List, Tuple
 
-import numpy as np  # type: ignore
-import tcod
+import numpy as np
+from tcod import libtcodpy
 
 import ai
 import fighter
@@ -131,8 +131,8 @@ def generate(width: int, height: int) -> gamemap.GameMap:
                 t_middle = t_start[0], t_end[1]
             else:
                 t_middle = t_end[0], t_start[1]
-            gm.tiles[tcod.line_where(*t_start, *t_middle)] = FLOOR
-            gm.tiles[tcod.line_where(*t_middle, *t_end)] = FLOOR
+            gm.tiles[libtcodpy.line_where(*t_start, *t_middle)] = FLOOR
+            gm.tiles[libtcodpy.line_where(*t_middle, *t_end)] = FLOOR
         rooms.append(new_room)
 
     # Add player to the first room.

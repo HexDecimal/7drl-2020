@@ -3,7 +3,7 @@ import sys
 
 import warnings
 
-import tcod
+from tcod import libtcodpy
 
 import model
 import state
@@ -15,13 +15,13 @@ def main() -> None:
     screen_height = 50
     map_width, map_height = 100, 100
 
-    tcod.console_set_custom_font("data/cp437-14.png", tcod.FONT_LAYOUT_CP437, 32, 8)
+    libtcodpy.console_set_custom_font("data/cp437-14.png", libtcodpy.FONT_LAYOUT_CP437, 32, 8)
 
-    with tcod.console_init_root(
+    with libtcodpy.console_init_root(
         screen_width,
         screen_height,
         "libtcod tutorial revised",
-        renderer=tcod.RENDERER_SDL2,
+        renderer=libtcodpy.RENDERER_SDL2,
         vsync=True,
         order="F",
     ) as state.g_console:

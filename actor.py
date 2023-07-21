@@ -7,7 +7,8 @@ import traceback
 from typing import Optional, Tuple, Type, TYPE_CHECKING
 
 import numpy as np  # type: ignore
-import tcod
+import tcod.map
+from tcod import libtcodpy
 
 from action import NoAction
 
@@ -59,7 +60,7 @@ class Actor:
             pov=(x, y),
             radius=math.ceil(radius),
             light_walls=False,
-            algorithm=tcod.FOV_RESTRICTIVE,
+            algorithm=libtcodpy.FOV_RESTRICTIVE,
         )
         # Get the relative coordinates for the world.
         mgrid = np.mgrid[-x : -x + map_.width, -y : -y + map_.height]

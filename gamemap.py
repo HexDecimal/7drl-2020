@@ -3,8 +3,9 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Dict, List, NamedTuple, Optional, Tuple, TYPE_CHECKING
 
-import numpy as np  # type: ignore
-import tcod
+import numpy as np
+import tcod.map
+from tcod import libtcodpy
 
 from location import Location
 from tqueue import TurnQueue
@@ -93,7 +94,7 @@ class GameMap:
             pov=self.player.location.xy,
             radius=0,
             light_walls=True,
-            algorithm=tcod.FOV_PERMISSIVE(8),
+            algorithm=libtcodpy.FOV_PERMISSIVE(8),
         )
         self.explored |= self.visible
 

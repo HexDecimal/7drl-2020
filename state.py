@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import tcod
+from tcod import libtcodpy
 import tcod.console
 import tcod.event
 
@@ -55,7 +55,7 @@ class State(tcod.event.EventDispatch):
         self.running = True
         while self.running:
             self.on_draw(g_console)
-            tcod.console_flush(g_console)
+            libtcodpy.console_flush(g_console)
             for event in tcod.event.wait():
                 if event.type == "WINDOWRESIZED":
                     g_console = configure_console()
