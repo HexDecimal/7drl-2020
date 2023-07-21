@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import random
-from typing import List, Optional, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional, Tuple
 
 import numpy as np
 import tcod.path
 
-from action import NoAction, Action
 import actions
 import states
+from action import Action, NoAction
 
 if TYPE_CHECKING:
     from actor import Actor

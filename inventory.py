@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import itertools
-from typing import Iterator, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterator, List
 
 if TYPE_CHECKING:
     from item import Item

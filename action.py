@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
 
 import item as item_
 

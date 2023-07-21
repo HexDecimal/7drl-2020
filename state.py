@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from tcod import libtcodpy
 import tcod.console
 import tcod.event
+from tcod import libtcodpy
 
 CONSOLE_MIN_SIZE = (60, 16)  # The smallest acceptable main console size.
 g_console: tcod.console.Console  # Global console object.

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import sys
-
 import math
+import sys
 import traceback
-from typing import Optional, Tuple, Type, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Tuple, Type
 
 import numpy as np  # type: ignore
 import tcod.map
@@ -15,9 +14,9 @@ from action import NoAction
 if TYPE_CHECKING:
     from ai import AI
     from fighter import Fighter
-    from location import Location
     from inventory import Inventory
-    from tqueue import TurnQueue, Ticket
+    from location import Location
+    from tqueue import Ticket, TurnQueue
 
 
 class Actor:

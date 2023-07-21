@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from action import (
-    NoAction,
     Action,
-    ActionWithPosition,
     ActionWithDirection,
     ActionWithItem,
+    ActionWithPosition,
+    NoAction,
 )
 
 

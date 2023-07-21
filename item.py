@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import effect
 import graphic
 
 if TYPE_CHECKING:
-    from actor import Actor
     from action import ActionWithItem
-    from location import Location
+    from actor import Actor
     from inventory import Inventory
+    from location import Location
 
 
 class Item(graphic.Graphic):

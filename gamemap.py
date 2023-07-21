@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Dict, List, NamedTuple, Optional, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List, NamedTuple, Optional, Tuple
 
 import numpy as np
 import tcod.map
@@ -12,6 +12,7 @@ from tqueue import TurnQueue
 
 if TYPE_CHECKING:
     import tcod.console
+
     from actor import Actor
     from graphic import Graphic
     from item import Item

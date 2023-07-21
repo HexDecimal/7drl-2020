@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import tcod
 import tcod.console
 
 import actions
-from state import State
 import rendering
+from state import State
 
 if TYPE_CHECKING:
-    from model import Model
     from item import Item
+    from model import Model
 
 
 class GameMapState(State):

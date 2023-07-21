@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from typing import Optional, Type, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Type
 
 import actor
-from ai import AI, BasicMonster, GuardAI
 import graphic
+from ai import AI, BasicMonster, GuardAI
 from inventory import Inventory
-
 
 if TYPE_CHECKING:
     from location import Location

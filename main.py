@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import sys
-
 import warnings
 
 from tcod import libtcodpy
 
 import model
-import state
 import procgen
+import state
 
 
 def main() -> None:

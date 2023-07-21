@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from typing import Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
 
 import tcod.console
 
 if TYPE_CHECKING:
     from tcod.console import Console
+
     from model import Model
 
 
