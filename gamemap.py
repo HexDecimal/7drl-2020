@@ -123,7 +123,7 @@ class GameMap:
         enemy_fov &= self.visible[world_view]
 
         # Draw the console based on visible or explored areas.
-        console.tiles_rgb[screen_view] = np.select(
+        console.rgb[screen_view] = np.select(
             (enemy_fov, self.visible[world_view], self.explored[world_view]),
             (
                 self.tiles["light"][world_view],
@@ -153,7 +153,7 @@ class GameMap:
         # Draw the visible entities.
         for xy, graphics in visible_objs.items():
             graphic = min(graphics)
-            console.tiles_rgb[["ch", "fg"]][xy] = graphic.char, graphic.color
+            console.rgb[["ch", "fg"]][xy] = graphic.char, graphic.color
 
     def __getitem__(self, key: Tuple[int, int]) -> MapLocation:
         return MapLocation(self, *key)

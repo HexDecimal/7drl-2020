@@ -25,7 +25,7 @@ def render_bar(
 ) -> None:
     """Render a filled bar with centered text."""
     console.print(x, y, text.center(width)[:width], fg=(255, 255, 255))
-    bar_bg = console.tiles_rgb["bg"][x : x + width, y]
+    bar_bg = console.rgb["bg"][x : x + width, y]
     bar_bg[...] = bg
     fill_width = max(0, min(width, int(fullness * width)))
     bar_bg[:fill_width] = fg
@@ -72,5 +72,5 @@ def draw_main_view(model: Model, console: Console) -> None:
             break
         console_ui.print_box(x, y, log_width, 0, str(text))
 
-    console.tiles[:-UI_WIDTH, :] = console_world.tiles
-    console.tiles[-UI_WIDTH:, :] = console_ui.tiles
+    console.rgba[:-UI_WIDTH, :] = console_world.rgba
+    console.rgba[-UI_WIDTH:, :] = console_ui.rgba

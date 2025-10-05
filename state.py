@@ -3,6 +3,7 @@ from __future__ import annotations
 import tcod.console
 import tcod.event
 from tcod import libtcodpy
+from tcod.event import KeySym
 
 CONSOLE_MIN_SIZE = (60, 16)  # The smallest acceptable main console size.
 g_console: tcod.console.Console  # Global console object.
@@ -10,40 +11,40 @@ g_console: tcod.console.Console  # Global console object.
 
 class State(tcod.event.EventDispatch):
     MOVE_KEYS = {
-        tcod.event.K_LEFT: (-1, 0),
-        tcod.event.K_RIGHT: (1, 0),
-        tcod.event.K_UP: (0, -1),
-        tcod.event.K_DOWN: (0, 1),
-        tcod.event.K_HOME: (-1, -1),
-        tcod.event.K_END: (-1, 1),
-        tcod.event.K_PAGEUP: (1, -1),
-        tcod.event.K_PAGEDOWN: (1, 1),
-        tcod.event.K_KP_1: (-1, 1),
-        tcod.event.K_KP_2: (0, 1),
-        tcod.event.K_KP_3: (1, 1),
-        tcod.event.K_KP_4: (-1, 0),
-        tcod.event.K_KP_5: (0, 0),
-        tcod.event.K_KP_6: (1, 0),
-        tcod.event.K_KP_7: (-1, -1),
-        tcod.event.K_KP_8: (0, -1),
-        tcod.event.K_KP_9: (1, -1),
-        tcod.event.K_h: (-1, 0),
-        tcod.event.K_j: (0, 1),
-        tcod.event.K_k: (0, -1),
-        tcod.event.K_l: (1, 0),
-        tcod.event.K_y: (-1, -1),
-        tcod.event.K_u: (1, -1),
-        tcod.event.K_b: (-1, 1),
-        tcod.event.K_n: (1, 1),
-        tcod.event.K_PERIOD: (0, 0),
-        tcod.event.K_CLEAR: (0, 0),
+        KeySym.LEFT: (-1, 0),
+        KeySym.RIGHT: (1, 0),
+        KeySym.UP: (0, -1),
+        KeySym.DOWN: (0, 1),
+        KeySym.HOME: (-1, -1),
+        KeySym.END: (-1, 1),
+        KeySym.PAGEUP: (1, -1),
+        KeySym.PAGEDOWN: (1, 1),
+        KeySym.KP_1: (-1, 1),
+        KeySym.KP_2: (0, 1),
+        KeySym.KP_3: (1, 1),
+        KeySym.KP_4: (-1, 0),
+        KeySym.KP_5: (0, 0),
+        KeySym.KP_6: (1, 0),
+        KeySym.KP_7: (-1, -1),
+        KeySym.KP_8: (0, -1),
+        KeySym.KP_9: (1, -1),
+        KeySym.H: (-1, 0),
+        KeySym.J: (0, 1),
+        KeySym.K: (0, -1),
+        KeySym.L: (1, 0),
+        KeySym.Y: (-1, -1),
+        KeySym.U: (1, -1),
+        KeySym.B: (-1, 1),
+        KeySym.N: (1, 1),
+        KeySym.PERIOD: (0, 0),
+        KeySym.CLEAR: (0, 0),
     }
 
     COMMAND_KEYS = {
-        tcod.event.K_d: "drop",
-        tcod.event.K_i: "inventory",
-        tcod.event.K_g: "pickup",
-        tcod.event.K_ESCAPE: "quit",
+        KeySym.D: "drop",
+        KeySym.I: "inventory",
+        KeySym.G: "pickup",
+        KeySym.ESCAPE: "quit",
     }
 
     def __init__(self) -> None:
